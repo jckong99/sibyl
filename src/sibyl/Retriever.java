@@ -23,6 +23,6 @@ public abstract class Retriever
 	@Override
 	public int hashCode()
 	{
-		return word.hashCode();
+		return word.hashCode()*10;
 	}
 }
