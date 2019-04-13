@@ -9,6 +9,8 @@ public class Thesaurus extends Retriever
 {
 	public Thesaurus(String word)
 	{
+		this.word = word;
+		type = 2;
 		try
 		{
 			doc = Jsoup.connect("https://www.thesaurus.com/browse/" + word.toLowerCase()).get();

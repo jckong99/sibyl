@@ -12,6 +12,8 @@ public class Wiki extends Retriever
 		String url = word.toLowerCase();
 		url = url.substring(0, 1).toUpperCase() + url.substring(1);
 		url.replaceAll(" ", "_");
+		this.word = word;
+		type = 3;
 		try 
 		{
 			doc = Jsoup.connect("https://en.wikipedia.org/wiki/" + url).get();

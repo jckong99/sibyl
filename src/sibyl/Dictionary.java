@@ -8,6 +8,8 @@ public class Dictionary extends Retriever
 {	
 	public Dictionary(String word)
 	{
+		this.word = word;
+		type = 1;
 		try
 		{
 			doc = Jsoup.connect("https://www.dictionary.com/browse/" + word.toLowerCase()).get();
