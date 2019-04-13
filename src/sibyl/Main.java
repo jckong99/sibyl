@@ -52,5 +52,7 @@ public class Main
 				System.out.println("Invalid command.");
 			}
 		}
+		
+		in.close();
 	}
 }

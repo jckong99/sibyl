@@ -1,15 +1,12 @@
 package sibyl;
 
 import java.io.IOException;
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements
+import org.jsoup.select.Elements;
 import org.jsoup.Jsoup;
 
 public class Wiki extends Retriever 
 {
-	private Document doc;
-	
 	public Wiki(String word) 
 	{
 		String url = word.toLowerCase();
@@ -18,32 +15,40 @@ public class Wiki extends Retriever
 		try 
 		{
 			doc = Jsoup.connect("https://en.wikipedia.org/wiki/" + url).get();
+			valid = true;
 		}
 		catch(IOException e)
 		{
 			System.out.println("No available wiki page for " + url);
+			valid = false;
 		}
 	}
 	
 	public String get()
 	{
-		Elements e = doc.select("*");
 		String ret = "";
-		for(Element i : e)
+		
+		if(valid)
 		{
-			if(i.className().contains("infobox"))
+			Elements e = doc.select("*");
+			
+			for(Element i : e)
 			{
-				ret = "";
-			}
-			if(i.className().contains("toc"))
-			{
-				break;
-			}
-			if(i.tagName().equals("p"))
-			{
-				ret += i.text() + "\n";
+				if(i.className().contains("infobox"))
+				{
+					ret = "";
+				}
+				if(i.className().contains("toc"))
+				{
+					break;
+				}
+				if(i.tagName().equals("p"))
+				{
+					ret += i.text() + "\n";
+				}
 			}
 		}
+		
 		return ret;
 	}
 }

@@ -1,61 +1,48 @@
 package sibyl;
 
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import java.io.IOException;
 
 public class Dictionary extends Retriever
-{
-	private Document doc;
-	
-	public static void main(String[] args)
-	{
-		Dictionary dict = new Dictionary("fox");
-		System.out.println("Text:\n" + dict.get());
-	}
-	
+{	
 	public Dictionary(String word)
 	{
 		try
 		{
 			doc = Jsoup.connect("https://www.dictionary.com/browse/" + word.toLowerCase()).get();
+			valid = true;
 		}
 		catch(IOException e)
 		{
 			System.out.println("No available dictionary entry for \"" + word + "\".");
+			valid = false;
 		}
 	}
 	
 	public String get()
 	{
 		String ret = "";
-		Elements partsOfSpeech, definitions;
-		int index = 0;
+		Elements sections, definitions;
 		int value = 1;
 		
-		partsOfSpeech = doc.select(".luna-pos");
-		/*for(Element e : partsOfSpeech)
-			ret += e.text() + "\n";*/
-		
-		do
+		if(valid)
 		{
-			definitions = doc.select("[value=" + value + "]");
-			
-			for(; index < definitions.size(); index++)
-			{
+			sections = doc.select(".css-hw0b7s.e1hk9ate0");
+			for(int sectionIndex = 0; sectionIndex < sections.size(); sectionIndex++)
+			{	
+				if(sections.get(sectionIndex).select("[value=" + value + "]").size() == 0)
+					break;
 				
+				ret += "Part of Speech: " + sections.get(sectionIndex).select(".luna-pos").text().split(",")[0] + "\n";
+				
+				for(int i = 0; i < (definitions = sections.get(sectionIndex).select("[value]")).size(); i++)
+				{
+					ret += "\t" + value + ". " + definitions.get(i).select("[value=" + value + "]").text() + "\n";
+					value++;
+				}
 			}
-			
-			value++;
 		}
-		while(definitions.size() > 0);
-		
-		/*elements = doc.select(".one-click-content.css-98tqe9.elq3nklv4");
-		elements = doc.select("[value=" + value + "]");
-		for(Element e : elements)
-			ret += e.text() + "\n";*/
 		
 		return ret;
 	}
