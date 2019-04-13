@@ -3,18 +3,18 @@ import java.io.IOException;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.Jsoup;
-public class Wiki extends Retriever 
+public class SimpleWiki extends Retriever 
 {
 	private Document doc;
 	
-	public Wiki(String word) 
+	public SimpleWiki(String word) 
 	{
 		String url = word.toLowerCase();
 		url = url.substring(0, 1).toUpperCase() + url.substring(1);
 		url.replaceAll(" ", "_");
 		try 
 		{
-			doc = Jsoup.connect("https://www.wikipedia.com/"+url);
+			doc = Jsoup.connect("https://simple.wikipedia.com/"+url);
 		}
 		catch(IOException e)
 		{
