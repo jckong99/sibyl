@@ -1,8 +1,9 @@
 package sibyl;
-import java.io.IOException;
 
+import java.io.IOException;
 import org.jsoup.nodes.Document;
 import org.jsoup.Jsoup;
+
 public class SimpleWiki extends Retriever 
 {
 	private Document doc;
@@ -14,15 +15,15 @@ public class SimpleWiki extends Retriever
 		url.replaceAll(" ", "_");
 		try 
 		{
-			doc = Jsoup.connect("https://simple.wikipedia.com/"+url);
+			doc = Jsoup.connect("https://simple.wikipedia.com/"+url).get();
 		}
 		catch(IOException e)
 		{
-			System.out.println("No available wiki page for " + url);
+			System.out.println("No available wiki page for \"" + url + "\".");
 		}
 	}
 	
-	public String lookup()
+	public String get()
 	{
 		
 	}

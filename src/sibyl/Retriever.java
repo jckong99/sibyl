@@ -1,10 +1,12 @@
 package sibyl;
 
-public class Retriever 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import java.io.IOException;
+
+public abstract class Retriever 
 {
 	private Document doc;
-	public String get()
-	{
-		
-	}
+	
+	public abstract String get();
 }
