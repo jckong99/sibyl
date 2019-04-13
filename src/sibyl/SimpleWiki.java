@@ -34,7 +34,7 @@ public class SimpleWiki extends Retriever
 			
 			for(Element i : e)
 			{
-				if(i.className().contains("infobox"))
+				if(i.text().contains("v t e") || i.className().contains("thumbinner"))
 				{
 					ret = "";
 				}
