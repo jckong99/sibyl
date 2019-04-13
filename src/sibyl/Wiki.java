@@ -32,10 +32,10 @@ public class Wiki extends Retriever
 		boolean start = false;
 		for(Element i : e)
 		{
-			if(start || i.className().contains("mw-parser-output"))
+			if(start || i.className().contains("infobox"))
 			{
 				start = true;
-				if(i.className().contains("infobox"))
+				if(i.className().contains("toc"))
 				{
 					break;
 				}
