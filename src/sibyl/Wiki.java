@@ -2,6 +2,8 @@ package sibyl;
 
 import java.io.IOException;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements
 import org.jsoup.Jsoup;
 
 public class Wiki extends Retriever 
@@ -37,11 +39,12 @@ public class Wiki extends Retriever
 				{
 					break;
 				}
-				if(i.tag().equals("p"))
+				if(i.tagName().equals("p"))
 				{
 					ret += i.text() + "\n";
 				}
 			}
 		}
+		return ret;
 	}
 }
