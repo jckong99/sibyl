@@ -1,8 +1,9 @@
 package sibyl;
-import java.io.IOException;
 
+import java.io.IOException;
 import org.jsoup.nodes.Document;
 import org.jsoup.Jsoup;
+
 public class Wiki extends Retriever 
 {
 	private Document doc;
@@ -14,7 +15,7 @@ public class Wiki extends Retriever
 		url.replaceAll(" ", "_");
 		try 
 		{
-			doc = Jsoup.connect("https://www.wikipedia.com/"+url);
+			doc = Jsoup.connect("https://en.wikipedia.org/wiki/" + url).get();
 		}
 		catch(IOException e)
 		{
@@ -22,7 +23,7 @@ public class Wiki extends Retriever
 		}
 	}
 	
-	public String lookup()
+	public String get()
 	{
 		return doc.select("p").first().text();
 	}

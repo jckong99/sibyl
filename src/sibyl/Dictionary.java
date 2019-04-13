@@ -31,16 +31,31 @@ public class Dictionary extends Retriever
 	public String get()
 	{
 		String ret = "";
-		Elements elements;
+		Elements partsOfSpeech, definitions;
+		int index = 0;
+		int value = 1;
 		
-		elements = doc.select(".luna-pos");
-		for(Element e : elements)
-			ret += e.text() + "\n";
+		partsOfSpeech = doc.select(".luna-pos");
+		/*for(Element e : partsOfSpeech)
+			ret += e.text() + "\n";*/
 		
-		//elements = doc.select(".one-click-content.css-98tqe9.elq3nklv4");
-		elements = doc.select(".default-content");
+		do
+		{
+			definitions = doc.select("[value=" + value + "]");
+			
+			for(; index < definitions.size(); index++)
+			{
+				
+			}
+			
+			value++;
+		}
+		while(definitions.size() > 0);
+		
+		/*elements = doc.select(".one-click-content.css-98tqe9.elq3nklv4");
+		elements = doc.select("[value=" + value + "]");
 		for(Element e : elements)
-			ret += e.text() + "\n";
+			ret += e.text() + "\n";*/
 		
 		return ret;
 	}

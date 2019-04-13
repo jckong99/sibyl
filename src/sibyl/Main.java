@@ -1,5 +1,6 @@
 package sibyl;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -11,13 +12,13 @@ public class Main
 		System.out.println("Welcome to Sybil! May I take your order?");
 		String line = "";
 		boolean go = true;
-		ArrayList<String> line_split = new ArrayList<String>();
+		List<String> line_split = new ArrayList<String>();
 		Scanner in = new Scanner(System.in);
 		while(go)
 		{
 			System.out.print("> ");
 			line = in.nextLine();
-			line_split = (ArrayList<String>) Arrays.asList(line.split(" "));
+			line_split = Arrays.asList(line.split(" "));
 			if(line_split.get(0).equals("w")) 
 			{
 				Wiki word = new Wiki(line_split.get(1));
