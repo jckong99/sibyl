@@ -27,7 +27,7 @@ public class Thesaurus extends Retriever
 		
 		if(valid)
 		{
-			Elements e = doc.select(".css-1lc0dpe .et6tpn80");
+			Elements e = doc.select(".css-1lc0dpe.et6tpn80");
 			
 			for(Element i : e)
 				ret += i.text();
