@@ -2,7 +2,6 @@ package sibyl;
 
 import java.io.IOException;
 import org.jsoup.nodes.Document;
-import org.w3c.dom.Element;
 import org.jsoup.Jsoup;
 
 public class Wiki extends Retriever 
@@ -26,17 +25,22 @@ public class Wiki extends Retriever
 	
 	public String get()
 	{
-		Elements e = doc.select(".mw-parser-output *");
-		ret = "";
+		Elements e = doc.select("*");
+		String ret = "";
+		boolean start = false;
 		for(Element i : e)
 		{
-			if(i.className().contains("infobox"))
+			if(start || i.className().contains("mw-parser-output"))
 			{
-				break;
-			}
-			if(i.tag().equals("p"))
-			{
-				ret += i.text() + "\n";
+				start = true;
+				if(i.className().contains("infobox"))
+				{
+					break;
+				}
+				if(i.tag().equals("p"))
+				{
+					ret += i.text() + "\n";
+				}
 			}
 		}
 	}
