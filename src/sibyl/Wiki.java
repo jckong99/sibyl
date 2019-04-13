@@ -29,20 +29,19 @@ public class Wiki extends Retriever
 	{
 		Elements e = doc.select("*");
 		String ret = "";
-		boolean start = false;
 		for(Element i : e)
 		{
-			if(start || i.className().contains("infobox"))
+			if(i.className().contains("infobox"))
 			{
-				start = true;
-				if(i.className().contains("toc"))
-				{
-					break;
-				}
-				if(i.tagName().equals("p"))
-				{
-					ret += i.text() + "\n";
-				}
+				ret = "";
+			}
+			if(i.className().contains("toc"))
+			{
+				break;
+			}
+			if(i.tagName().equals("p"))
+			{
+				ret += i.text() + "\n";
 			}
 		}
 		return ret;
