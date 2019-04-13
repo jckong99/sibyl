@@ -13,4 +13,16 @@ public abstract class Retriever
 	{
 		return word;
 	}
+	
+	@Override
+	public boolean equals(Object o)
+	{
+		return (((Retriever)(o)).word).equals(word);
+	}
+	
+	@Override
+	public int hashCode()
+	{
+		return word.hashCode();
+	}
 }
