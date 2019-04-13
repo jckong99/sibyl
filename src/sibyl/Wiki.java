@@ -24,6 +24,6 @@ public class Wiki extends Retriever
 	
 	public String lookup()
 	{
-		
+		return doc.select("p").first().text();
 	}
 }
