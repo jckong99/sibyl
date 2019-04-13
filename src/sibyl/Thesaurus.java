@@ -24,13 +24,33 @@ public class Thesaurus extends Retriever
 	public String get()
 	{
 		String ret = "";
+		int counter;
 		
 		if(valid)
 		{
-			Elements e = doc.select(".css-1lc0dpe.et6tpn80");
+			Element section = doc.selectFirst(".css-1lc0dpe.et6tpn80");
+			Elements moreRelevant = section.select(".css-15n8j60");
+			Elements lessRelevant = section.select(".css-z20i5j");
 			
-			for(Element i : e)
-				ret += i.text();
+			ret += "More relevant:";
+			counter = 1;
+			for(Element e : moreRelevant)
+			{
+				ret += (counter == 1 ? "\n\t" : "    ") + e.text();
+				counter++;
+				if(counter > 3)
+					counter = 1;
+			}
+			
+			ret += "\nLess relevant:";
+			counter = 1;
+			for(Element e : lessRelevant)
+			{
+				ret += (counter == 1 ? "\n\t" : "    ") + e.text();
+				counter++;
+				if(counter > 3)
+					counter = 1;
+			}
 		}
 		
 		return ret;
