@@ -15,7 +15,7 @@ public class SimpleWiki extends Retriever
 		url.replaceAll(" ", "_");
 		try 
 		{
-			doc = Jsoup.connect("https://simple.wikipedia.com/"+url).get();
+			doc = Jsoup.connect("https://simple.wikipedia.org/wiki/"+url).get();
 		}
 		catch(IOException e)
 		{
@@ -25,6 +25,24 @@ public class SimpleWiki extends Retriever
 	
 	public String get()
 	{
-		
+		Elements e = doc.select("*");
+		String ret = "";
+		boolean start = false;
+		for(Element i : e)
+		{
+			if(start || i.className().contains("infobox"))
+			{
+				start = true;
+				if(i.className().contains("toc"))
+				{
+					break;
+				}
+				if(i.tagName().equals("p"))
+				{
+					ret += i.text() + "\n";
+				}
+			}
+		}
+		return ret;
 	}
 }
