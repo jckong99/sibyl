@@ -39,7 +39,7 @@ public class SimpleWiki extends Retriever
 			{
 				if(i.text().contains("v t e") || i.className().contains("thumbinner"))
 					ret = "";
-				if(i.className().contains("toc"))
+				if(i.className().contains("toc") || i.tagName().equals("h2"))
 					break;
 				if(i.tagName().equals("p"))
 					ret += "\t" + i.text() + "\n";
