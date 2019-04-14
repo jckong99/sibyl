@@ -4,6 +4,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Thesaurus extends Retriever
 {
@@ -53,6 +54,26 @@ public class Thesaurus extends Retriever
 				counter++;
 				if(counter > 3)
 					counter = 1;
+			}
+		}
+		
+		return ret;
+	}
+	
+	public ArrayList<String> getList()
+	{
+		ArrayList<String> ret = new ArrayList<String>();
+		int counter;
+		
+		if(valid)
+		{
+			Element section = doc.selectFirst(".css-1lc0dpe.et6tpn80");
+			Elements moreRelevant = section.select(".css-15n8j60");
+			Elements lessRelevant = section.select(".css-z20i5j");
+			
+			for(Element e : section)
+			{
+				ret.add(e.text());
 			}
 		}
 		
