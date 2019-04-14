@@ -1,8 +1,12 @@
 package sibyl;
 
 import java.util.List;
+import java.util.Scanner;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Arrays;
@@ -12,7 +16,6 @@ public class Main
 	public static void main(String[] args) 
 	{
 		String word;
-		
 		if(args.length == 0 || (word = args[args.length - 1]).charAt(0) == '-')
 		{
 			System.out.println("Invalid; must have word as argument.");
@@ -20,12 +23,12 @@ public class Main
 		else
 		{
 			HashSet<Retriever> retrievers = new HashSet<Retriever>();
-			
+			String inputfilename = null, outputfilename = null;
 			for(int i = 0; i < args.length - 1; i++)
 			{
 				if(args[i].equals("-?") || args[i].equals("--?"))
 				{
-					System.out.println("sibyl: sibyl [-d] [-th] [-w] [-sw] word");
+					System.out.println("sibyl: sibyl [-d] [-th] [-w] [-sw] [-f] <inputfilename> <outputfilename> word");
 					System.out.println("\tSearches the web for and displays information on word queries.");
 					System.out.println("\n\tBy default, the syntax \"sibyl word\" retrieves word's definition from dictionary.com.");
 					System.out.println("\n\tOptions:");
@@ -34,6 +37,7 @@ public class Main
 					System.out.println("\t\t-w --w word\t\tRetrieves synopsis from wikipedia.org.");
 					System.out.println("\t\t-sw --sw word\t\tRetrieves synopsis from simple.wikipedia.org.");
 					System.out.println("\t\t-? --?\t\tDisplays this help page.");
+					System.out.println("\t\t-f --f <inputfilename> <outputfilename> \t\tPerforms the sybil replacement on the file and places that in an output file.");
 				}
 				else if(args[i].equals("-w") || args[i].equals("--w"))
 				{
@@ -63,10 +67,51 @@ public class Main
 					else
 						System.out.println("Invalid; must have word as argument.");
 				}
+				else if(args[i].equals("-f") || args[i].equals("--f"))
+				{
+					if(i + 3 < args.length && args[i+1].charAt(0) != '-' && args[i+2].charAt(0) != '-')
+					{
+						inputfilename = args[i+1];
+						outputfilename = args[i+2];
+						i+=2;
+					}
+					else
+						System.out.println("Invalid; must have filename as argument.");
+				}
 			}
 			
-			for(Retriever r : retrievers)
-				System.out.println(r.get());
+			if(inputfilename == null || outputfilename == null)
+			{
+				for(Retriever r : retrievers)
+					System.out.println(r.get());
+			}
+			else
+			{
+				File file = new File(inputfilename); 
+				Scanner sc = null;
+				String text = "";
+				try {
+					sc = new Scanner(file);
+					while (sc.hasNextLine()) 
+					{
+						      text += sc.nextLine()+"\n";
+					}
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
+				
+				 try {
+						BufferedWriter writer = new BufferedWriter(new FileWriter(outputfilename));
+						writer.write(text);
+					    writer.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				for(Retriever r : retrievers)
+					new FileReader(outputfilename, outputfilename, r).process();
+			}
 		}
 		
 		/*if(line_split.size() <= 2)
