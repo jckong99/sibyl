@@ -11,12 +11,14 @@ public class FileReader
 {
 	private String in_filename, out_filename;
 	private Retriever r;
+	
 	public FileReader(String in_filename, String out_filename, Retriever r)
 	{
 		this.in_filename = in_filename;
 		this.out_filename = out_filename;
 		this.r = r;
 	}
+	
 	public void process()
 	{
 		String filetext = "";
@@ -25,12 +27,11 @@ public class FileReader
 		try {
 			sc = new Scanner(file);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 		while (sc.hasNextLine()) 
 		{
-			      filetext += sc.nextLine()+"\n";
+			filetext += sc.nextLine()+"\n";
 		}
 		
 		int wordloc = filetext.indexOf(r.getWord());
@@ -41,9 +42,7 @@ public class FileReader
 			writer.write(filetext);
 		    writer.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	     
 	}
 }

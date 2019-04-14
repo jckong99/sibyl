@@ -18,7 +18,7 @@ public class Main
 		ArrayList<String> argsList = new ArrayList<String>(Arrays.asList(args));
 		LinkedHashSet<Retriever> retrievers = new LinkedHashSet<Retriever>();
 		String inputfilename = null, outputfilename = null;
-		boolean invalidFlag = false;
+		boolean invalidFlag = false, sFlag = false;
 		
 		if(args.length == 0)
 		{
@@ -50,10 +50,12 @@ public class Main
 		{
 			if(argsList.get(i).equals("-s") || argsList.get(i).equals("--s"))
 			{
-				if(i + 3 < argsList.size() && argsList.get(i+1).charAt(0) != '-' && argsList.get(i+2).charAt(0) != '-')
+				if(i + 2 < argsList.size() && argsList.get(i+1).charAt(0) != '-' && argsList.get(i+2).charAt(0) != '-')
 				{
-					inputfilename = argsList.remove(i + 1);
-					outputfilename = argsList.remove(i + 2);
+					argsList.remove(i);
+					inputfilename = argsList.remove(i);
+					outputfilename = argsList.remove(i);
+					sFlag = true;
 				}
 				else
 				{
@@ -70,10 +72,11 @@ public class Main
 			{
 				if(inputfilename == null && outputfilename == null)
 				{
-					if(i + 3 < argsList.size() && argsList.get(i+1).charAt(0) != '-' && argsList.get(i+2).charAt(0) != '-')
+					if(i + 2 < argsList.size() && argsList.get(i+1).charAt(0) != '-' && argsList.get(i+2).charAt(0) != '-')
 					{
-						inputfilename = argsList.remove(i + 1);
-						outputfilename = argsList.remove(i + 2);
+						argsList.remove(i);
+						inputfilename = argsList.remove(i);
+						outputfilename = argsList.remove(i);
 					}
 					else
 					{
@@ -98,7 +101,7 @@ public class Main
 				break;
 			}
 		}
-		if(word == null)
+		if(word == null && !sFlag)
 		{
 			System.out.println("Invalid; must have word as argument.");
 			System.exit(1);
@@ -160,8 +163,28 @@ public class Main
 					System.out.println("Invalid; " + outputfilename + " cannot be opened.");
 					System.exit(1);
 				}
-				for(Retriever r : retrievers)
-					new FileReader(outputfilename, outputfilename, r).process();
+				
+				if(sFlag)
+				{
+					text = (new Simplifier(text)).process();
+					
+					try
+					{
+						BufferedWriter writer = new BufferedWriter(new FileWriter(outputfilename));
+						writer.write(text);
+					    writer.close();
+					}
+					catch (IOException e)
+					{
+						System.out.println("Invalid; " + outputfilename + " cannot be opened.");
+						System.exit(1);
+					}
+				}
+				else
+				{
+					for(Retriever r : retrievers)
+						new FileReader(outputfilename, outputfilename, r).process();
+				}
 			}
 		}
 	}

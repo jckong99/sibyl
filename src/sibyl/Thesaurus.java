@@ -34,11 +34,22 @@ public class Thesaurus extends Retriever
 			ret += "From thesaurus.com:\n";
 			Element section = doc.selectFirst(".css-1lc0dpe.et6tpn80");
 			Elements moreRelevant = section.select(".css-15n8j60");
+			Elements somewhatRelevant = section.select(".css-1hlsbfu");
 			Elements lessRelevant = section.select(".css-z20i5j");
 			
 			ret += "    More relevant synonyms:";
 			counter = 1;
 			for(Element e : moreRelevant)
+			{
+				ret += (counter == 1 ? "\n        " : "    ") + e.text();
+				counter++;
+				if(counter > 3)
+					counter = 1;
+			}
+			
+			ret += "\n    Somewhat relevant synonyms:";
+			counter = 1;
+			for(Element e : somewhatRelevant)
 			{
 				ret += (counter == 1 ? "\n        " : "    ") + e.text();
 				counter++;
@@ -63,18 +74,22 @@ public class Thesaurus extends Retriever
 	public ArrayList<String> getList()
 	{
 		ArrayList<String> ret = new ArrayList<String>();
-		int counter;
 		
 		if(valid)
 		{
 			Element section = doc.selectFirst(".css-1lc0dpe.et6tpn80");
 			Elements moreRelevant = section.select(".css-15n8j60");
+			Elements somewhatRelevant = section.select(".css-1hlsbfu");
 			Elements lessRelevant = section.select(".css-z20i5j");
 			
-			for(Element e : section)
-			{
+			for(Element e : moreRelevant)
 				ret.add(e.text());
-			}
+			
+			for(Element e : somewhatRelevant)
+				ret.add(e.text());
+			
+			for(Element e : lessRelevant)
+				ret.add(e.text());
 		}
 		
 		return ret;
