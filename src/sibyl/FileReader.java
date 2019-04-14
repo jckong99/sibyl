@@ -32,14 +32,9 @@ public class FileReader
 		{
 			      filetext += sc.nextLine()+"\n";
 		}
-		int index = 0;
 		
-		while(filetext.indexOf(r.getWord(), index) != -1)
-		{
-			int wordloc = filetext.indexOf(r.getWord(), index);
-			filetext = filetext.substring(0, wordloc + r.getWord().length() - 1) + "("+r.get()+")"+filetext.substring(wordloc + r.getWord().length() - 1);
-			index = wordloc + 1;
-		}
+		int wordloc = filetext.indexOf(r.getWord());
+		filetext = filetext.substring(0, wordloc + r.getWord().length() - 1) + "("+r.get()+")"+filetext.substring(wordloc + r.getWord().length() - 1);
 		
 	    try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(out_filename));
