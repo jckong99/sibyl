@@ -30,17 +30,19 @@ public class Dictionary extends Retriever
 		
 		if(valid)
 		{
+			ret += "From dictionary.com:\n";
 			sections = doc.select(".css-hw0b7s.e1hk9ate0");
+			
 			for(int sectionIndex = 0; sectionIndex < sections.size(); sectionIndex++)
 			{	
 				if(sections.get(sectionIndex).select("[value=" + value + "]").size() == 0)
 					break;
 				
-				ret += "Part of Speech: " + sections.get(sectionIndex).select(".luna-pos").text().split(",")[0] + "\n";
+				ret += "\tPart of Speech: " + sections.get(sectionIndex).select(".luna-pos").text().split(",")[0] + "\n";
 				
 				for(int i = 0; i < (definitions = sections.get(sectionIndex).select("[value]")).size(); i++)
 				{
-					ret += "\t" + value + ". " + definitions.get(i).select("[value=" + value + "]").text() + "\n";
+					ret += "\t\t" + value + ". " + definitions.get(i).select("[value=" + value + "]").text() + "\n";
 					value++;
 				}
 			}

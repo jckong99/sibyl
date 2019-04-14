@@ -30,25 +30,26 @@ public class Thesaurus extends Retriever
 		
 		if(valid)
 		{
+			ret += "From thesaurus.com:\n";
 			Element section = doc.selectFirst(".css-1lc0dpe.et6tpn80");
 			Elements moreRelevant = section.select(".css-15n8j60");
 			Elements lessRelevant = section.select(".css-z20i5j");
 			
-			ret += "More relevant:";
+			ret += "\tMore relevant:";
 			counter = 1;
 			for(Element e : moreRelevant)
 			{
-				ret += (counter == 1 ? "\n\t" : "    ") + e.text();
+				ret += (counter == 1 ? "\n\t\t" : "    ") + e.text();
 				counter++;
 				if(counter > 3)
 					counter = 1;
 			}
 			
-			ret += "\nLess relevant:";
+			ret += "\n\tLess relevant:";
 			counter = 1;
 			for(Element e : lessRelevant)
 			{
-				ret += (counter == 1 ? "\n\t" : "    ") + e.text();
+				ret += (counter == 1 ? "\n\t\t" : "    ") + e.text();
 				counter++;
 				if(counter > 3)
 					counter = 1;

@@ -1,15 +1,12 @@
 package sibyl;
 
-import java.util.List;
 import java.util.Scanner;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Arrays;
+import java.util.LinkedHashSet;
 
 public class Main 
 {
@@ -22,7 +19,7 @@ public class Main
 		}
 		else
 		{
-			HashSet<Retriever> retrievers = new HashSet<Retriever>();
+			LinkedHashSet<Retriever> retrievers = new LinkedHashSet<Retriever>();
 			String inputfilename = null, outputfilename = null;
 			for(int i = 0; i < args.length - 1; i++)
 			{
@@ -82,6 +79,13 @@ public class Main
 			
 			if(inputfilename == null || outputfilename == null)
 			{
+				Retriever[] output = new Retriever[retrievers.size()];
+				int i = retrievers.size() - 1;
+				for(Retriever r : retrievers)
+				{
+					output[i] = r;
+					i--;
+				}
 				for(Retriever r : retrievers)
 					System.out.println(r.get());
 			}
@@ -97,7 +101,6 @@ public class Main
 						      text += sc.nextLine()+"\n";
 					}
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} 
 				
@@ -106,7 +109,6 @@ public class Main
 						writer.write(text);
 					    writer.close();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				for(Retriever r : retrievers)

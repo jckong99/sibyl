@@ -32,22 +32,17 @@ public class Wiki extends Retriever
 		
 		if(valid)
 		{
+			ret += "From wikipedia.org:\n";
 			Elements e = doc.select("*");
 			
 			for(Element i : e)
 			{
 				if(i.text().contains("v t e") || i.className().contains("thumbinner"))
-				{
 					ret = "";
-				}
 				if(i.className().contains("toc"))
-				{
 					break;
-				}
 				if(i.tagName().equals("p"))
-				{
-					ret += i.text() + "\n";
-				}
+					ret += "\t" + i.text() + "\n";
 			}
 		}
 		
