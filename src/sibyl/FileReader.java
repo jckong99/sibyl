@@ -34,7 +34,7 @@ public class FileReader
 		}
 		
 		int wordloc = filetext.indexOf(r.getWord());
-		filetext = filetext.substring(0, wordloc + r.getWord().length() - 1) + "("+r.get()+")"+filetext.substring(wordloc + r.getWord().length() - 1);
+		filetext = filetext.substring(0, wordloc + r.getWord().length()) + " ("+r.get()+") "+filetext.substring(wordloc + r.getWord().length());
 		
 	    try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(out_filename));
