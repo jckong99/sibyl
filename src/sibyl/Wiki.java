@@ -32,7 +32,6 @@ public class Wiki extends Retriever
 		
 		if(valid)
 		{
-			ret += "From wikipedia.org:\n";
 			Elements e = doc.select("*");
 			
 			for(Element i : e)
@@ -46,6 +45,6 @@ public class Wiki extends Retriever
 			}
 		}
 		
-		return ret;
+		return "From wikipedia.org:\n" + ret;
 	}
 }

@@ -35,21 +35,21 @@ public class Thesaurus extends Retriever
 			Elements moreRelevant = section.select(".css-15n8j60");
 			Elements lessRelevant = section.select(".css-z20i5j");
 			
-			ret += "\tMore relevant:";
+			ret += "    More relevant synonyms:";
 			counter = 1;
 			for(Element e : moreRelevant)
 			{
-				ret += (counter == 1 ? "\n\t\t" : "    ") + e.text();
+				ret += (counter == 1 ? "\n        " : "    ") + e.text();
 				counter++;
 				if(counter > 3)
 					counter = 1;
 			}
 			
-			ret += "\n\tLess relevant:";
+			ret += "\n    Less relevant synonyms:";
 			counter = 1;
 			for(Element e : lessRelevant)
 			{
-				ret += (counter == 1 ? "\n\t\t" : "    ") + e.text();
+				ret += (counter == 1 ? "\n        " : "    ") + e.text();
 				counter++;
 				if(counter > 3)
 					counter = 1;

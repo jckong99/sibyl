@@ -32,7 +32,6 @@ public class SimpleWiki extends Retriever
 		
 		if(valid)
 		{
-			ret += "From simple.wikipedia.org:\n";
 			Elements e = doc.select("*");
 			
 			for(Element i : e)
@@ -46,6 +45,6 @@ public class SimpleWiki extends Retriever
 			}
 		}
 		
-		return ret;
+		return "From simple.wikipedia.org:\n" + ret;
 	}
 }
